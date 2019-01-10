@@ -5,13 +5,17 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export class MapContainer extends Component {
   state = {
+    lat: 0,
+    lng: 0,
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {}
   };
   onMarkerClick = (props, marker, e) => { // Checked what marker was clicked and sets it into the state
-    console.log('marker clicked');
+    console.log('marker clicked', props);
     this.setState({
+      lat: props.position.lat,
+      lng: props.position.lng,
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
@@ -31,9 +35,9 @@ export class MapContainer extends Component {
       <Map
         google={this.props.google}
         zoom={15}
-        initialCenter={{
-          lat: this.props.location.lat,
-          lng: this.props.location.lng
+        center={{
+          lat: !!this.state.lat ? this.state.lat : this.props.location.lat,
+          lng: !!this.state.lng ? this.state.lng : this.props.location.lng
         }}
         onClick={this.onMapClicked}
       >
