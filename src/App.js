@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import GoogleMaps from './Components/GoogleMaps';
 import Geolocation from './Components/Geolocation';
+import Search from './Components/Search';
 import axios from 'axios';
 
 class App extends Component {
@@ -44,6 +45,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Search venues={this.state.venues} />
         <Geolocation setGeolocation={this.setGeolocation} />
         {this.state.geolocationArrived && <GoogleMaps location={{lat: this.state.lat, lng: this.state.lng}} venues={this.state.venues} />}
       </div>
