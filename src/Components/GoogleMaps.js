@@ -33,11 +33,13 @@ export class MapContainer extends Component {
   render() {
     return (
       <Map
+        className='Map-Container'
+        containerStyle={{width: '100%', height: '100%'}}
         google={this.props.google}
         zoom={15}
         center={{
-          lat: !!this.state.lat ? this.state.lat : this.props.location.lat,
-          lng: !!this.state.lng ? this.state.lng : this.props.location.lng
+          lat: !!this.state.lat ? this.state.lat : this.props.location.lat, // checks if the state has a latitude different from 0 if it doesnt it uses the prop lat
+          lng: !!this.state.lng ? this.state.lng : this.props.location.lng // checks if the state has a longitude different from 0 if it doesnt it uses the prop lng
         }}
         onClick={this.onMapClicked}
       >

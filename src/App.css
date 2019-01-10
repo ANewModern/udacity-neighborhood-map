@@ -1,4 +1,12 @@
 .App {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 50px 350px 50px;
+  grid-template-areas:
+    "h h h h h h h h h h h h"
+    "s s m m m m m m m m m m"
+    "s s m m m m m m m m m m";
   text-align: center;
 }
 
@@ -20,6 +28,34 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.Map-Container {
+  grid-area: m;
+  width: 100%;
+  height: 100%;
+}
+
+.Search-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: h;
+  width: 100%;
+}
+
+.Search-Input {
+  width: 98%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.SearchResults-Container {
+  grid-area: s;
 }
 
 @keyframes App-logo-spin {
