@@ -5,28 +5,62 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export class MapContainer extends Component {
   state = {
-    zoom: 15
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  };
+  onMarkerClick = (props, marker, e) => { // Checked what marker was clicked and sets it into the state
+    console.log('marker clicked');
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  }
+  onMapClicked = props => { // Checks if the map has been clicked to close any info window that has been opened
+    console.log('map clicked');
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
   };
   render() {
     return (
       <Map
         google={this.props.google}
-        zoom={this.state.zoom}
+        zoom={15}
         initialCenter={{
           lat: this.props.location.lat,
           lng: this.props.location.lng
         }}
+        onClick={this.onMapClicked}
       >
         {this.props.venues.map(venue => {
           return (
             <Marker
               title={venue.venue.name}
-              name={venue.venue.name.toLowerCase().split(' ').join('_')}
-              key={venue.venue.name.toLowerCase().split(' ').join('_')}
-              position={{ lat: venue.venue.location.lat, lng: venue.venue.location.lng }}
+              name={venue.venue.name}
+              key={venue.venue.name
+                .toLowerCase()
+                .split(" ")
+                .join("_")}
+              position={{
+                lat: venue.venue.location.lat,
+                lng: venue.venue.location.lng
+              }}
+              onClick={this.onMarkerClick}
             />
           );
         })}
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
+          <div>
+            <h1>{this.state.selectedPlace.name}</h1>
+          </div>
+        </InfoWindow>
       </Map>
     );
   }
