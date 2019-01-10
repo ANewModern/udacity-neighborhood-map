@@ -5,19 +5,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export class MapContainer extends Component {
   state = {
-    lat: -34.397,
-    lng: 150.64,
     zoom: 15
-  };
-  componentDidMount() {
-
-  }
-  initMap = () => {
-    this.setState(() => {
-      return {
-        zoom: 12
-      };
-    });
   };
   render() {
     return (
@@ -29,11 +17,16 @@ export class MapContainer extends Component {
           lng: this.props.location.lng
         }}
       >
-        <Marker onClick={this.onMarkerClick} name={"Current location"} />
-
-        <InfoWindow onClose={this.onInfoWindowClose}>
-          <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
-        </InfoWindow>
+        {this.props.venues.map(venue => {
+          return (
+            <Marker
+              title={venue.venue.name}
+              name={venue.venue.name.toLowerCase().split(' ').join('_')}
+              key={venue.venue.name.toLowerCase().split(' ').join('_')}
+              position={{ lat: venue.venue.location.lat, lng: venue.venue.location.lng }}
+            />
+          );
+        })}
       </Map>
     );
   }
