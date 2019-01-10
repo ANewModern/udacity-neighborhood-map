@@ -14,10 +14,12 @@ class Geolocation extends React.Component {
     }
   }
   setGeolocation = () => {
-    this.props.setGeolocation(
-      this.props.coords.latitude,
-      this.props.coords.longitude
-    );
+    if (!!this.props.coords.latitude && !!this.props.coords.longitude) {
+      this.props.setGeolocation(
+        this.props.coords.latitude,
+        this.props.coords.longitude
+      );
+    }
   };
   render() {
     return !this.props.isGeolocationAvailable ? (
